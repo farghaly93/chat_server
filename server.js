@@ -35,6 +35,7 @@ io.on('connection', (socket) => {
 
 
   socket.on('join', data => {
+    console.log(data);
     const room = data.room;
     socket.join(room);
     const rooms = io.sockets.adapter.rooms[room];
