@@ -45,7 +45,7 @@ io.on('connection', (socket) => {
     }
   }); 
 
-  socket.disconnect(() => console.log('discoonected'));
+  socket.on('disconnected', () => console.log('discoonected'));
 
 });
 
