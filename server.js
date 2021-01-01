@@ -6,8 +6,10 @@ const bodyParser = require('body-parser');
 const usersRouter = require('./routes/users_router.js');
 const Chat = require('./models/messages');
 const upload = require('express-fileupload');
+// const io = require('socket.io')(server);
 
-const io = require('socket.io')(server);
+const WebSocket = require('ws')
+const io = new WebSocket.Server({ port: 8080 });
 
 io.on('connection', (socket) => {
   console.log('connected');
