@@ -51,7 +51,7 @@ app.use(usersRouter);
 
 mongoose.connect('mongodb+srv://farghaly:farghaly_93@cluster0.kagup.mongodb.net/chat?retryWrites=true&w=majority', {useNewUrlParser: true, useUnifiedTopology: true, useNewUrlParser: true}).then(() => {
   console.log('Connected successfully to database...');
-  server.listen(process.env.PORT || 5000, (port) => {
+  server.listen(process.env.PORT || 3001, (port) => {
     console.log('Server started and connected to port: '+port);
   });
 }).catch(e => {
