@@ -7,14 +7,20 @@ const usersRouter = require('./routes/users_router.js');
 const Chat = require('./models/messages');
 const upload = require('express-fileupload');
 // const io = require('socket.io')(server);
+const port = 6969;
 
-const WebSocket = require('ws')
-const io = new WebSocket.Server({ port: 8080 });
+const WebSocket = require('ws');
+const io = new WebSocket.Server({ server });
+
+
+
+
+
+
+
 
 io.on('connection', (socket) => {
-  console.log('connected');
   socket.on('send', async(messageData) => {
-    console.log('new')
     const newMessage = await new Chat({
       message: messageData.message, 
       date: Date.now(), 
@@ -28,14 +34,11 @@ io.on('connection', (socket) => {
   });
 
 
-
-
   socket.on('join', data => {
     const room = data.room;
     socket.join(room);
     const rooms = io.sockets.adapter.rooms[room];
     if(rooms.length > 0) {
-      console.log('Emit nueUser event', room);
       io.sockets.in(room).emit('newUser', {username: data.username, joined: true});
     } else {
       socket.emit('newUser', {joined: false});
@@ -46,14 +49,24 @@ io.on('connection', (socket) => {
 
 });
 
+
+
+
+
+
+
+
+
 app.use(bodyParser.json({extended: true}));
 app.use(bodyParser.urlencoded({extended: false}));
 app.use(upload({useTempFiles: true, preserveExtension: 4}));
 app.use(usersRouter);
 
+
+
 mongoose.connect('mongodb+srv://farghaly:farghaly_93@cluster0.kagup.mongodb.net/chat?retryWrites=true&w=majority', {useNewUrlParser: true, useUnifiedTopology: true, useNewUrlParser: true}).then(() => {
   console.log('Connected successfully to database...');
-  server.listen(process.env.PORT || 3001, (port) => {
+  server.listen(process.env.PORT || port, () => {
     console.log('Server started and connected to port: '+port);
   });
 }).catch(e => {
