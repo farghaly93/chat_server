@@ -6,11 +6,11 @@ const bodyParser = require('body-parser');
 const usersRouter = require('./routes/users_router.js');
 const Chat = require('./models/messages');
 const upload = require('express-fileupload');
-// const io = require('socket.io')(server);
+const io = require('socket.io')(server);
 const port = 6969;
 
-const WebSocket = require('ws');
-const io = new WebSocket.Server({ server });
+// const WebSocket = require('ws');
+// const io = new WebSocket.Server({ server });
 
 
 
@@ -20,6 +20,15 @@ const io = new WebSocket.Server({ server });
 
 
 io.on('connection', (socket) => {
+  
+//   socket.on('message', (data) => {
+//     console.log(data);
+//     io.clients.forEach((client) => {
+//       if (client.readyState === WebSocket.OPEN) {
+//         client.send(data);
+//       }
+//     })
+//   })
   socket.on('send', async(messageData) => {
     const newMessage = await new Chat({
       message: messageData.message, 
@@ -34,6 +43,7 @@ io.on('connection', (socket) => {
   });
 
 
+
   socket.on('join', data => {
     console.log(data);
     const room = data.room;
@@ -46,7 +56,7 @@ io.on('connection', (socket) => {
     }
   }); 
 
-  socket.on('disconnected', () => console.log('discoonected'));
+  socket.on('disconnected', () => console.log('disconnected'));
 
 });
 
