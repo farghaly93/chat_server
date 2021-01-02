@@ -171,10 +171,11 @@ exports.deleteRoom = async(req, res) => {
         if(delRoom.n && delMessagesInRoom.n) {
             res.json({deleted: true});
         } else {
-            res.json({deleted: false});
+            res.json({deleted: false, error: 'failed'});
         }
     } catch(e) {
         console.log(e);
+        res.json({deleted: false, error: e});
     }
 }
 
