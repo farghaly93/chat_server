@@ -1,6 +1,6 @@
 const express = require('express');
 const app = express();
-const server = require('http').createServer(app);
+const server = require('https').createServer(app);
 const mongoose = require('mongoose');
 const bodyParser = require('body-parser');
 const usersRouter = require('./routes/users_router.js');
