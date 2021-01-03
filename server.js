@@ -19,16 +19,7 @@ const port = 6969;
 
 
 
-io.on('connection', (socket) => {
-  
-//   socket.on('message', (data) => {
-//     console.log(data);
-//     io.clients.forEach((client) => {
-//       if (client.readyState === WebSocket.OPEN) {
-//         client.send(data);
-//       }
-//     })
-//   })
+io.sockets.on('connection', (socket) => {
   socket.on('send', async(messageData) => {
     const newMessage = await new Chat({
       message: messageData.message, 
@@ -50,7 +41,8 @@ io.on('connection', (socket) => {
     socket.join(room);
     const rooms = io.sockets.adapter.rooms[room];
     if(rooms.length > 0) {
-      io.sockets.in(room).emit('newUser', {username: data.username, joined: true});
+      io.sockets.to(room).emit('newUser', {message: `${data.username} has joined the chat..`, joined: true});
+      socket.emit('newUser', {message: `Welcome to this chat room.. ${data.username}`, joined: true});
     } else {
       socket.emit('newUser', {joined: false});
     }

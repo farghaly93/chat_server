@@ -68,12 +68,18 @@ exports.login = async(req, res) => {
                     username: existingUser.username,
                     imagePath: existingUser.imagePath,
                     token: token,
-                 }
+                 },
+                 error: null
                 });
+            } else {
+                res.json({error: 'password is wrong'})
             }
+        } else {
+            res.json({error: 'Email is wrong..'});
         }
     } catch(e) {
         console.log(e);
+        res.json({error: e});
     }
 }
 
@@ -167,8 +173,9 @@ exports.getRoomsForUser = async(req, res) => {
 exports.deleteRoom = async(req, res) => {
     try{
         const delRoom = await Rooms.deleteOne({room: req.body.room, owner: req.body.userId});
-        const delMessagesInRoom = await Messages.deleteMany({room: req.body.room});
-        if(delRoom.n && delMessagesInRoom.n) {
+        const delMessagesInRoom = await Chat.deleteMany({room: req.body.room});
+        console.log(delRoom.n, delMessagesInRoom.n);
+        if(delRoom.n && (delMessagesInRoom.n || await Chat.find({room: req.body.room}).count() === 0)) {
             res.json({deleted: true});
         } else {
             res.json({deleted: false, error: 'failed'});
