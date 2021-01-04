@@ -21,6 +21,8 @@ const port = 6969;
 
 io.sockets.on('connection', (socket) => {
   socket.on('send', async(messageData) => {
+    const rooms = io.sockets.adapter.rooms[room];
+    console.log(rooms);
     const newMessage = await new Chat({
       message: messageData.message, 
       date: Date.now(), 
@@ -29,14 +31,13 @@ io.sockets.on('connection', (socket) => {
       room: messageData.room,
       type: messageData.type
     }).save();
-    socket.join(messageData.room);
+    // socket.join(messageData.room);
     io.sockets.in(messageData.room).emit('message', newMessage);
   });
 
 
 
   socket.on('join', data => {
-    console.log(data);
     const room = data.room;
     socket.join(room);
     const rooms = io.sockets.adapter.rooms[room];
