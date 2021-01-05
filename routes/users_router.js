@@ -8,6 +8,7 @@ Router.get('/getAllUsers', usersController.getAllUsers);
 Router.get('/getRoomsForUser/:userId', usersController.getRoomsForUser);
 Router.post('/getRoomData', usersController.getRoomData);
 Router.post('/register', usersController.register);
+Router.post('/updateUser', usersController.updateUser);
 Router.post('/login', usersController.login);
 Router.post('/deleteMessage', usersController.deleteMessage);
 Router.post('/createRoom', usersController.createRoom);

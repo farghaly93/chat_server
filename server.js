@@ -8,7 +8,6 @@ const Chat = require('./models/messages');
 const upload = require('express-fileupload');
 const io = require('socket.io')(server);
 const port = 6969;
-
 // const WebSocket = require('ws');
 // const io = new WebSocket.Server({ server });
 
@@ -49,6 +48,11 @@ io.sockets.on('connection', (socket) => {
     }
   }); 
 
+
+  socket.on('deleteMessageForAll', (data) => {
+    io.sockets.in(data.room).emit('deleteMessage', data.messageId);
+  });
+
   socket.on('disconnected', () => console.log('disconnected'));
 
 });
@@ -68,7 +72,7 @@ app.use(usersRouter);
 
 
 
-mongoose.connect('mongodb+srv://farghaly:farghaly_93@cluster0.kagup.mongodb.net/chat?retryWrites=true&w=majority', {useNewUrlParser: true, useUnifiedTopology: true, useNewUrlParser: true}).then(() => {
+mongoose.connect('mongodb+srv://farghaly:farghaly_93@cluster0.kagup.mongodb.net/chat?retryWrites=true&w=majority', {useUnifiedTopology: true, useNewUrlParser: true}).then(() => {
   console.log('Connected successfully to database...');
   server.listen(process.env.PORT || port, () => {
     console.log('Server started and connected to port: '+port);

@@ -52,6 +52,27 @@ exports.register = async(req, res) => {
     }
 }
 
+exports.updateUser = async(req, res) => {
+    try{
+        const body = {...req.body};
+        const authData = await Users.updateOne({_id: body._id}, body);
+        if(authData.nModified === 1) {
+            const token = jwt.sign({}, 'mohammadfarghalyalisaadawy', {expiresIn: '1000h'});
+            res.json({userData: {
+                _id: authData._id,
+                email: authData.email,
+                password: authData.password,
+                username: authData.username,
+                imagePath: authData.imagePath,
+                token: token,
+                }
+            });
+        }
+    } catch(e) {
+        console.log(e);
+    }
+}
+
 exports.login = async(req, res) => {
     try{
         const body = {...req.body};
@@ -86,7 +107,20 @@ exports.login = async(req, res) => {
 exports.uploadFile = async(req, res) => {
     try{
         const image = req.files.file;
+        console.log(image.tempFilePath);
         Cloudinary.uploader.upload(image.tempFilePath, (err, result) => {
+            if(err) {console.log(err); return;}
+            res.json({url: result.secure_url});
+        });
+    } catch(e) {
+        console.log(e);
+    }
+}
+exports.uploadAudio = async(req, res) => {
+    try{
+        const audio = req.files.file;
+        console.log(audio.tempFilePath);
+        Cloudinary.uploader.upload_large(image.tempFilePath, (err, result) => {
             if(err) {console.log(err); return;}
             res.json({url: result.secure_url});
         });
