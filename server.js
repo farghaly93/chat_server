@@ -21,7 +21,7 @@ const port = 6969;
 
 io.sockets.on('connection', (socket) => {
   socket.on('send', async(messageData) => {
-    const rooms = io.sockets.adapter.rooms[room];
+    const rooms = io.sockets.adapter.rooms[messageData.room];
     console.log(rooms);
     const newMessage = await new Chat({
       message: messageData.message, 
