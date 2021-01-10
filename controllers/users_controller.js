@@ -27,11 +27,14 @@ auth: {
 
 exports.getAllMessages = async(req, res) => {
     try{
+        console.log('getmessages')
         const room = req.body.room;
         const skip = req.body.skip;
         const limit = req.body.limit;
         // return;
+        console.log(skip, limit);
         const messages = await Chat.find({room}).skip(skip).limit(limit).sort({date: -1});
+        console.log(messages);
         res.json({messages: messages});
     } catch(e) {
         console.log(e);
