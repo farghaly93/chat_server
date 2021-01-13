@@ -95,6 +95,7 @@ exports.changePassword = async(req, res) => {
         const account = await Users.findOne({_id: body.userId});
         if(account != null) {
             const isValid = bcrypt.compare(body.old, account.password);
+            console.log(isValid);
             if(!isValid) {
                 res.json({done: false});
             } else {
