@@ -39,8 +39,7 @@ io.sockets.on('connection', (socket) => {
   socket.on('join', data => {
     const room = data.room;
     socket.join(room);
-    const clients = io.nsps['/'].adapter.rooms[room].sockets;
-    const clientsLength = Object.keys(clients).length;
+    const clientsLength = io.nsps['/'].adapter.rooms[room].length;
     console.log(clientsLength, clients);
     if(clientsLength > 0) {
       io.sockets.to(room).emit('newUser', {message: `${data.username} has joined the chat..`, joined: true, joiners: clientsLength});
@@ -53,8 +52,7 @@ io.sockets.on('connection', (socket) => {
   socket.on('leaveRoom', data => {
     socket.leave(data.room);
     console.log(io.nsps['/'].adapter.rooms);
-    const clients = io.nsps['/'].adapter.rooms[data.room].sockets;
-    const clientsLength = Object.keys(clients).length;
+    const clientsLength = io.nsps['/'].adapter.rooms[data.room].length;
     io.sockets.to(data.room).emit('leftRoom', {message: data.username+' has left the room', joiners: clientsLength});
   });
 
