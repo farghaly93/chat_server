@@ -43,10 +43,8 @@ io.sockets.on('connection', (socket) => {
     const clientsLength = Object.keys(clients).length;
     console.log(clientsLength, clients);
     if(clientsLength > 0) {
-      setTimeout(() => {
-        io.sockets.to(room).emit('newUser', {message: `${data.username} has joined the chat..`, joined: true, joiners: clientsLength});
-        socket.emit('newUser', {message: `Welcome to this chat room.. ${data.username}`, joined: true});
-      }, 2000);
+      io.sockets.to(room).emit('newUser', {message: `${data.username} has joined the chat..`, joined: true, joiners: clientsLength});
+      socket.emit('newUser', {message: `Welcome to this chat room.. ${data.username}`, joined: true, joiners: clientsLength});
     } else {
       socket.emit('newUser', {joined: false});
     }
