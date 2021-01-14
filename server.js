@@ -40,6 +40,7 @@ io.sockets.on('connection', (socket) => {
     const room = data.room;
     socket.join(room);
     const clients = io.nsps['/'].adapter.rooms[room].sockets;
+    console.log(clients.length, clients);
     if(clients.length > 0) {
       io.sockets.to(room).emit('newUser', {message: `${data.username} has joined the chat..`, joined: true, joiners: clients.length});
       socket.emit('newUser', {message: `Welcome to this chat room.. ${data.username}`, joined: true});
