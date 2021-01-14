@@ -39,7 +39,7 @@ io.sockets.on('connection', (socket) => {
   socket.on('join', data => {
     const room = data.room;
     socket.join(room);
-    const clients = io.sockets.adapter.rooms[room].sockets;
+    const clients = io.nsps['/'].adapter.rooms[room].sockets;
     if(clients.length > 0) {
       io.sockets.to(room).emit('newUser', {message: `${data.username} has joined the chat..`, joined: true, joiners: clients.length});
       socket.emit('newUser', {message: `Welcome to this chat room.. ${data.username}`, joined: true});
@@ -50,7 +50,7 @@ io.sockets.on('connection', (socket) => {
 
   socket.on('leaveRoom', data => {
     socket.leave(room);
-    const clients = io.sockets.adapter.rooms[room].sockets
+    const clients = io.nsps['/'].adapter.rooms[room].sockets
     io.sockets.to(data.room).emit('leftRoom', {message: data.username+' has left the room', joiners: clients.length});
   });
 
