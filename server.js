@@ -45,6 +45,7 @@ io.sockets.on('connection', (socket) => {
     if(clientsLength > 0) {
       io.sockets.to(room).emit('newUser', {message: `${data.username} has joined the chat..`, joined: true, joiners: clientsLength});
       socket.emit('newUser', {message: `Welcome to this chat room.. ${data.username}`, joined: true});
+      setTimeout(() => {}, 2000);
     } else {
       socket.emit('newUser', {joined: false});
     }
