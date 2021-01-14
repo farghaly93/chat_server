@@ -39,15 +39,20 @@ io.sockets.on('connection', (socket) => {
   socket.on('join', data => {
     const room = data.room;
     socket.join(room);
-    const rooms = io.sockets.adapter.rooms[room];
-    if(rooms.length > 0) {
-      io.sockets.to(room).emit('newUser', {message: `${data.username} has joined the chat..`, joined: true});
+    const clients = io.sockets.adapter.rooms[room].sockets;
+    if(clients.length > 0) {
+      io.sockets.to(room).emit('newUser', {message: `${data.username} has joined the chat..`, joined: true, joiners: clients.length});
       socket.emit('newUser', {message: `Welcome to this chat room.. ${data.username}`, joined: true});
     } else {
       socket.emit('newUser', {joined: false});
     }
   }); 
 
+  socket.on('leaveRoom', data => {
+    socket.leave(room);
+    const clients = io.sockets.adapter.rooms[room].sockets
+    io.sockets.to(data.room).emit('leftRoom', {message: data.username+' has left the room', joiners: clients.length});
+  });
 
   socket.on('deleteMessageForAll', (data) => {
     io.sockets.in(data.room).emit('deleteMessage', data.messageId);
