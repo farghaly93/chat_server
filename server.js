@@ -51,10 +51,10 @@ io.sockets.on('connection', (socket) => {
   }); 
 
   socket.on('leaveRoom', data => {
-    socket.leave(data.room);
     const clients = io.nsps['/'].adapter.rooms[data.room].sockets;
+    socket.leave(data.room);
     const clientsLength = Object.keys(clients).length;
-    io.sockets.to(data.room).emit('leftRoom', {message: data.username+' has left the room', joiners: clientsLength});
+    io.sockets.to(data.room).emit('leftRoom', {message: data.username+' has left the room', joiners: clientsLength - 1});
   });
 
   socket.on('deleteMessageForAll', (data) => {
