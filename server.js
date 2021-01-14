@@ -40,9 +40,10 @@ io.sockets.on('connection', (socket) => {
     const room = data.room;
     socket.join(room);
     const clients = io.nsps['/'].adapter.rooms[room].sockets;
+    const clientsLength = Object.keys(clients).length;
     console.log(clients.length, clients);
-    if(clients.length > 0) {
-      io.sockets.to(room).emit('newUser', {message: `${data.username} has joined the chat..`, joined: true, joiners: clients.length});
+    if(clientsLength > 0) {
+      io.sockets.to(room).emit('newUser', {message: `${data.username} has joined the chat..`, joined: true, joiners: clientsLength});
       socket.emit('newUser', {message: `Welcome to this chat room.. ${data.username}`, joined: true});
     } else {
       socket.emit('newUser', {joined: false});
@@ -52,7 +53,8 @@ io.sockets.on('connection', (socket) => {
   socket.on('leaveRoom', data => {
     socket.leave(room);
     const clients = io.nsps['/'].adapter.rooms[room].sockets
-    io.sockets.to(data.room).emit('leftRoom', {message: data.username+' has left the room', joiners: clients.length});
+    const clientsLength = Object.keys(clients).length;
+    io.sockets.to(data.room).emit('leftRoom', {message: data.username+' has left the room', joiners: clientsLength});
   });
 
   socket.on('deleteMessageForAll', (data) => {
