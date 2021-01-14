@@ -76,33 +76,6 @@ io.sockets.on('connection', (socket) => {
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-                                              {
-  2021-01-14T16:05:30.407198+00:00 app[web.1]:   'JwU_w-OqjbAoZEbuAAAC': Room { sockets: { 'JwU_w-OqjbAoZEbuAAAC': true }, length: 1 },
-  2021-01-14T16:05:30.407198+00:00 app[web.1]:   'bEjjIOBGIl-CT9ppAAAD': Room { sockets: { 'bEjjIOBGIl-CT9ppAAAD': true }, length: 1 },
-  2021-01-14T16:05:30.407199+00:00 app[web.1]:   'g0hSVbaEr0vo2NmcTlSyFpnVcmLCDdiJYEa/EjGbUXU=': Room {
-  2021-01-14T16:05:30.407200+00:00 app[web.1]:     sockets: { 'bEjjIOBGIl-CT9ppAAAD': true, 'JwU_w-OqjbAoZEbuAAAC': true },
-  2021-01-14T16:05:30.407200+00:00 app[web.1]:     length: 2
-  2021-01-14T16:05:30.407201+00:00 app[web.1]:   }
-  2021-01-14T16:05:30.407201+00:00 app[web.1]: }
-
-
-
-
-
-
-
 app.use(bodyParser.json({extended: true}));
 app.use(bodyParser.urlencoded({extended: false}));
 app.use(upload({useTempFiles: true, preserveExtension: 4}));
