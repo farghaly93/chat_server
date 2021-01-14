@@ -51,7 +51,7 @@ io.sockets.on('connection', (socket) => {
   }); 
 
   socket.on('leaveRoom', data => {
-    socket.leave(room);
+    socket.leave(data.room);
     const clients = io.nsps['/'].adapter.rooms[data.room].sockets;
     const clientsLength = Object.keys(clients).length;
     io.sockets.to(data.room).emit('leftRoom', {message: data.username+' has left the room', joiners: clientsLength});
