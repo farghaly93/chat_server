@@ -22,6 +22,7 @@ io.sockets.on('connection', (socket) => {
   socket.on('send', async(messageData) => {
     const rooms = io.sockets.adapter.rooms[messageData.room];
     console.log(rooms);
+    console.log(messageData);
     const newMessage = await new Chat({
       message: messageData.message, 
       date: Date.now(), 
