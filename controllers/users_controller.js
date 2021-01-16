@@ -306,3 +306,16 @@ exports.resetPassword = async(req, res) => {
     }
 }
 
+exports.fetchUserDataById = async(req, res) => {
+    try{
+        const userData = await Users.findOne({_id: req.params.userId});
+        if(userData != null) {
+            res.json({userData});
+        } else {
+            res.json({userData: null});
+        }
+    }catch(e) {
+        console.log(e);
+        res.json({userData: null});
+    }
+}

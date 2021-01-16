@@ -16,6 +16,7 @@ Router.post('/createRoom', usersController.createRoom);
 Router.post('/joinRoom', usersController.joinRoom);
 Router.post('/deleteRoom', usersController.deleteRoom);
 Router.get('/resetPassword/:email', usersController.resetPassword);
+Router.get('/fetchUserDataById/:userId', usersController.fetchUserDataById);
 Router.post('/uploadFile', upload.single('file'), usersController.uploadFile);
 Router.post('/uploadAudio', upload.single('file'), usersController.uploadAudio);
 
