@@ -12,10 +12,6 @@ const messagesCollection = mongoose.Schema({
         type: String,
         required: true
     },
-    imagePath: {
-        type: String,
-        required: true
-    },
     room: {
         type: String,
         required: true
