@@ -26,7 +26,6 @@ io.sockets.on('connection', (socket) => {
       message: messageData.message, 
       date: Date.now(), 
       userId: messageData.userId,
-      imagePath: messageData.imagePath,
       room: messageData.room,
       type: messageData.type
     }).save();
